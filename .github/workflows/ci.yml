@@ -1,0 +1,67 @@
+name: CI & Release
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+      - name: Build et tests
+        run: ./mvnw -B verify
+
+  package-windows:
+    needs: test
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      - name: JAR exécutable
+        shell: bash
+        run: ./mvnw -B -DskipTests package
+
+      - name: Application Windows autonome (jpackage)
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force target/pkg-input | Out-Null
+          Copy-Item target/petit-bac.jar target/pkg-input/
+          jpackage --type app-image --name PetitBac --app-version 1.0.0 `
+            --vendor "Equipe Petit Bac" --input target/pkg-input --main-jar petit-bac.jar `
+            --dest target/jpackage --icon packaging/petit-bac.ico --win-console `
+            --java-options "-Dapp.open-browser=true" `
+            --add-modules java.base,java.compiler,java.desktop,java.instrument,java.logging,java.management,java.naming,java.net.http,java.prefs,java.rmi,java.scripting,java.security.jgss,java.sql,java.xml,jdk.jfr,jdk.unsupported,jdk.management,jdk.crypto.ec,jdk.zipfs,jdk.charsets `
+            --jlink-options "--strip-native-commands --strip-debug --no-man-pages --no-header-files --compress=zip-9"
+          Copy-Item packaging/LISEZMOI.txt target/jpackage/PetitBac/
+          New-Item -ItemType Directory -Force dist | Out-Null
+          Compress-Archive -Path target/jpackage/PetitBac -DestinationPath dist/PetitBac-windows-x64.zip
+          Copy-Item target/petit-bac.jar dist/petit-bac.jar
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: petit-bac
+          path: dist/*
+
+      - name: Publication de la release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          body_path: packaging/RELEASE_NOTES.md

@@ -1,0 +1,28 @@
+Petit Bac - version Windows autonome
+====================================
+
+Lancer le jeu
+-------------
+Double-cliquez sur PetitBac.exe. Aucune installation, Java est inclus.
+Une fenêtre de console s'ouvre (c'est le serveur du jeu) puis votre
+navigateur s'ouvre sur http://localhost:8080.
+
+Si Windows affiche "Windows a protégé votre ordinateur" (SmartScreen),
+cliquez sur "Informations complémentaires" puis "Exécuter quand même" :
+l'exécutable n'est simplement pas signé.
+
+Jouer à plusieurs (même Wi-Fi)
+------------------------------
+La console affiche l'adresse réseau du serveur, par exemple
+http://192.168.1.20:8080 (ou http://petitbac.local:8080).
+Les autres joueurs l'ouvrent dans leur navigateur, créent un compte,
+puis rejoignent la salle avec son code à 6 caractères.
+Au premier lancement, autorisez PetitBac dans le pare-feu Windows
+pour que les autres appareils puissent se connecter.
+
+Arrêter
+-------
+Fermez la fenêtre de console.
+
+Les comptes et l'historique des parties sont enregistrés dans
+petitbac-v2.db, à côté de PetitBac.exe.
