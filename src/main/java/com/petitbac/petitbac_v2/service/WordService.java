@@ -14,8 +14,10 @@ public class WordService {
     public boolean isValid(String categorie, String mot, char lettre) {
         if (mot == null || mot.trim().isEmpty()) return false;
 
-        boolean bonneLettre = Character.toUpperCase(mot.trim().charAt(0))
-                == Character.toUpperCase(lettre);
+        // Comparaison sans accents : "Élodie" est valide pour la lettre E
+        String normalise = WordRepository.normaliser(mot);
+        boolean bonneLettre = !normalise.isEmpty()
+                && Character.toUpperCase(normalise.charAt(0)) == Character.toUpperCase(lettre);
 
         return bonneLettre && wordRepository.exists(categorie, mot);
     }

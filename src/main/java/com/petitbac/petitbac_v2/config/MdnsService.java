@@ -81,7 +81,7 @@ public class MdnsService {
      * choisit l'interface de sortie par defaut. Cela selectionne la bonne carte Wi-Fi/Ethernet
      * et evite les pieges (loopback 127.0.0.1, interface virtuelle WSL/Docker).
      */
-    private InetAddress resolveLanAddress() throws Exception {
+    public static InetAddress resolveLanAddress() throws Exception {
         try (DatagramSocket socket = new DatagramSocket()) {
             socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
             InetAddress local = socket.getLocalAddress();

@@ -1,6 +1,7 @@
 package com.petitbac.petitbac_v2.controller;
 
 import com.petitbac.petitbac_v2.model.GameRoom;
+import com.petitbac.petitbac_v2.repository.WordRepository;
 import com.petitbac.petitbac_v2.repository.UserRepository;
 import com.petitbac.petitbac_v2.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,28 +85,16 @@ public class MultiGameController {
 
         // Si ce joueur crie BAC!
         if (criedBac) {
-            if (criedBac) {
-                // Vérifie qu'il y a au moins un autre joueur connecté
-                if (room.getJoueurs().size() < 2) {
-                    return Map.of("status", "error",
-                            "message", "Impossible de crier BAC seul !");
-                }
-                room.setBac(prenom);
-                room.setStatus(GameRoom.Status.PLAYING);
-                messagingTemplate.convertAndSend(
-                        "/topic/room/" + code,
-                        (Object) Map.of("type", "BAC_CRIED", "joueur", prenom, "timer", 30)
-                );
+            // Vérifie qu'il y a au moins un autre joueur connecté
+            if (room.getJoueurs().size() < 2) {
+                return Map.of("status", "error",
+                        "message", "Impossible de crier BAC seul !");
             }
             room.setBac(prenom);
             room.setStatus(GameRoom.Status.PLAYING);
             messagingTemplate.convertAndSend(
                     "/topic/room/" + code,
-                    (Object) Map.of(
-                            "type",   "BAC_CRIED",
-                            "joueur", prenom,
-                            "timer",  30
-                    )
+                    (Object) Map.of("type", "BAC_CRIED", "joueur", prenom, "timer", 30)
             );
         }
 
@@ -325,10 +314,10 @@ public class MultiGameController {
                         .map(j -> {
                             String m = room.getReponses()
                                     .getOrDefault(j, new HashMap<>())
-                                    .getOrDefault(cat, "").trim().toLowerCase();
-                            return wordService.isValid(cat, m, lettre) ? m : "";
+                                    .getOrDefault(cat, "").trim();
+                            return wordService.isValid(cat, m, lettre) ? WordRepository.normaliser(m) : "";
                         })
-                        .filter(m -> !m.isEmpty() && m.equals(mot.toLowerCase()))
+                        .filter(m -> !m.isEmpty() && m.equals(WordRepository.normaliser(mot)))
                         .count();
 
                 int points = 0;

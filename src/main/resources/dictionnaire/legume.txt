@@ -1,0 +1,84 @@
+# Légumes acceptés
+Ail
+Artichaut
+Asperge
+Aubergine
+Bette
+Betterave
+Blette
+Brocoli
+Butternut
+Cardon
+Carotte
+Céleri
+Céleri-rave
+Champignon
+Chou
+Chou-fleur
+Chou de Bruxelles
+Chou kale
+Chou rouge
+Chou romanesco
+Ciboulette
+Citrouille
+Concombre
+Cornichon
+Courge
+Courgette
+Cresson
+Crosne
+Échalote
+Edamame
+Endive
+Épinard
+Fenouil
+Fève
+Flageolet
+Gingembre
+Gombo
+Haricot
+Haricot vert
+Igname
+Kale
+Kohlrabi
+Laitue
+Lentille
+Mâche
+Maïs
+Manioc
+Navet
+Oignon
+Oseille
+Panais
+Patate douce
+Pâtisson
+Persil
+Petit pois
+Piment
+Pissenlit
+Poireau
+Pois chiche
+Poivron
+Pomme de terre
+Potiron
+Potimarron
+Pourpier
+Radis
+Raifort
+Roquette
+Rutabaga
+Salade
+Salsifis
+Scarole
+Soja
+Tomate
+Topinambour
+Truffe
+Ulluco
+Vitelotte
+Wasabi
+Yam
+Daïkon
+Jicama
+Chayote
+Coriandre

@@ -1,6 +1,7 @@
 package com.petitbac.petitbac_v2.service;
 
 import com.petitbac.petitbac_v2.model.GameRoom;
+import com.petitbac.petitbac_v2.repository.WordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;
@@ -64,7 +65,7 @@ public class ScoreService {
 
                 if (valideOriginal) {
                     // Mot valide d'origine : entre dans la logique de partage
-                    motValideParJoueur.put(joueur, mot.toLowerCase());
+                    motValideParJoueur.put(joueur, WordRepository.normaliser(mot));
                 } else if (force) {
                     // Contestation gagnée : +1 point fixe (peu importe la lettre)
                     scores.merge(joueur, 1, Integer::sum);
