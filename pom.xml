@@ -9,22 +9,10 @@
 	</parent>
 	<groupId>com.petitbac</groupId>
 	<artifactId>petitbac-v2</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name/>
-	<description/>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
+	<version>1.0.0</version>
+	<name>Petit Bac</name>
+	<description>Petit bac multijoueur en temps réel (Spring Boot, WebSocket STOMP, SQLite)</description>
+	<url>https://github.com/e1000ouch/petit-bac</url>
 	<properties>
 		<java.version>21</java.version>
 	</properties>
@@ -69,9 +57,32 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+		<!-- Clients WebSocket servis localement (jeu jouable sans Internet, en LAN) -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>sockjs-client</artifactId>
+			<version>1.5.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>stomp-websocket</artifactId>
+			<version>2.3.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
+		<finalName>petit-bac</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -81,8 +92,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>21</source>
-					<target>21</target>
+					<release>21</release>
 				</configuration>
 			</plugin>
 		</plugins>

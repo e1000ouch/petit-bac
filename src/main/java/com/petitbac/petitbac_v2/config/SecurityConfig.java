@@ -38,8 +38,6 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        System.out.println("=== SecurityConfig chargé ===");
-        System.out.println("=== /images/** est autorisé ===");
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authenticationProvider(authenticationProvider())
@@ -66,6 +64,7 @@ public class SecurityConfig {
                             "/css/**",
                             "/images/**",
                             "/js/**",
+                            "/webjars/**",
                             "/ws/**",
                             "/favicon.ico"
                     ).permitAll();
